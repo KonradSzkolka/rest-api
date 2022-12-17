@@ -16,21 +16,43 @@ class PeopleController extends Controller
     
     public function showOne($id): JsonResponse
     {
-        return response()->json(Person::find($id));
+        if (Person::where('id', $id)->exists()) {
+            $person = Person::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
+            return response($person, 200);
+        } else {
+            return response()->json([
+                "message" => "Person not found"
+            ], 404);
+        }
     }
 
     public function update($id, Request $request): JsonResponse
     {
-        $person = Person::findOrFail($id);
-        $person->update($request->all());
+        if (Person::where('id', $id)->exists()) {
+            $person = Person::find($id);
+            $person->update($request->all());
 
-        return response()->json($person, 200);
+            return response()->json($person, 200);
+        } else {
+            return response()->json([
+                "message" => "Person not found"
+            ], 404);
+        }
     }
 
     public function delete($id): JsonResponse
     {
-        Person::findOrFail($id)->delete();
-        return response()->json('Deleted Successfully', 200);
+        if (Person::where('id', $id)->exists()) {
+            $person = Person::find($id);
+            $person->delete();
+            return response()->json([
+                "message" => "records deleted"
+            ], 202);
+        } else {
+            return response()->json([
+                "message" => "Person not found"
+            ], 404);
+        }
     }
 
     public function create(Request $request): JsonResponse
