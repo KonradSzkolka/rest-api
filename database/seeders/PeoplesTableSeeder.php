@@ -13,6 +13,7 @@ class PeoplesTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('peoples')->delete();
+        DB::statement('ALTER TABLE peoples AUTO_INCREMENT = 1');
 
         $faker = Factory::create();
 
