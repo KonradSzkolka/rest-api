@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreatePeoplesTable extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('peoples', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('surname');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('address');
+            $table->string('city');
+            $table->string('country');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('peoples');
+    }
+}
