@@ -17,8 +17,8 @@ class PeopleController extends Controller
     public function showOne($id): JsonResponse
     {
         if (Person::where('id', $id)->exists()) {
-            $person = Person::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
-            return response($person, 200);
+            $person = Person::where('id', $id)->get();
+            return response()->json($person, 200);
         } else {
             return response()->json([
                 "message" => "Person not found"
